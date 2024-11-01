@@ -16,31 +16,8 @@ targetRows = (df['target'].str.contains(searchQuery[0]) |
               df['target'].str.contains(searchQuery[2]) |
               df['target'].str.contains(searchQuery[3]))
 
-# targetRows = (df['source'].str.contains(searchQuery[0]) | df['target'].str.contains(searchQuery[0]) | 
-#               df['source'].str.contains(searchQuery[1]) | df['target'].str.contains(searchQuery[1]) | 
-#               df['source'].str.contains(searchQuery[2]) | df['target'].str.contains(searchQuery[2]) | 
-#               df['source'].str.contains(searchQuery[3]) | df['target'].str.contains(searchQuery[3]))
-
 # All rows related to finance, money, jobs, or business
 targetdf = df[targetRows].reset_index().drop(columns=['index'])
-
-#For each subreddit that was linked, store how they were saved
-# sidebar, description, topbar, wiki, and count (total)
-linkedSubreddits = {}
-for index, row in targetdf.iterrows():
-    if row['target'] not in linkedSubreddits:
-        linkedSubreddits[row['target']] = {
-            'sidebar': 0,
-            'description': 0,
-            'topbar': 0,
-            'wiki': 0,
-            'count': 0
-        }
-
-# Populating linkedSubreddits
-for index, row in targetdf.iterrows():
-    linkedSubreddits[row['target']][row['type']] += 1
-    linkedSubreddits[row['target']]['count'] += 1
 
 # DataFrames of each Feature (wiki, sidebar, topbar, description)
 # Including Matrix for each
